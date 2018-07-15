@@ -4,6 +4,7 @@ import (
 	"errors"
 	"fmt"
 	"math/rand"
+	"strconv"
 	"strings"
 	"sync"
 	"time"
@@ -215,4 +216,43 @@ func (o Obj) RandMutate() Obj {
 	*baz = *baz + 1
 
 	return o
+}
+
+func GenerateETag(t time.Time) string {
+	return strconv.FormatInt(t.UnixNano(), 10)
+}
+
+func ParseETag(eTag string) (time.Time, error) {
+	i, err := strconv.ParseInt(eTag, 10, 64)
+	if err != nil {
+		return time.Time{}, err
+	}
+	fmt.Printf("ParseEtag num %+v\n", i)
+	t := time.Unix(0, i)
+	fmt.Printf("ParseEtag time %+v\n", t)
+	return t, nil
+}
+
+// ThsObjETag is a threadsafe Obj with an ETag
+type ThsObjETag struct {
+	o Obj
+	e string
+	m sync.Mutex
+}
+
+func NewThsObjETag() *ThsObjETag {
+	return &ThsObjETag{}
+}
+
+func (o *ThsObjETag) Get() (Obj, string) {
+	o.m.Lock()
+	defer o.m.Unlock()
+	return o.o, o.e
+}
+
+func (o *ThsObjETag) Set(newO Obj, newETag string) {
+	o.m.Lock()
+	defer o.m.Unlock()
+	o.o = newO
+	o.e = newETag
 }
