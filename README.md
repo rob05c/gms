@@ -18,3 +18,6 @@ The `gmsetagserver` and `gmsetagclient` behave identically to `gmsserver` and `g
 
 Note a specification could permit both, as `If-Range` does, since an `HTTP-date` is not quoted and `ETag` must be quoted, so they may be unambigiuously distinguished.
 
+## deltaserver and deltaclient
+
+The `deltaserver` and `deltaclient` implement RFC3229 Delta Encoding in HTTP, with a new instance-manipulation value `jsonpatch` implementing RFC6902 JSON Patch.

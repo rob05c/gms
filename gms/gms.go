@@ -10,6 +10,18 @@ import (
 	"time"
 )
 
+const HeaderGetModifiedSince = "Get-Modified-Since"
+
+const HeaderIfNoneMatch = "If-None-Match"
+const HeaderAcceptInstanceManipulation = "A-IM"
+const HeaderInstanceManipulation = "IM"
+const HeaderContentType = "Content-Type"
+const HeaderETag = "ETag"
+const HeaderDeltaBase = "Delta-Base"
+
+const InstanceManipulationValueJSONPatch = "jsonpatch"
+const InstanceManipulationValueGzip = "gzip"
+
 const MimeTypeJSONPatch = "application/json-patch+json"
 const MimeTypeJSON = "application/json"
 
